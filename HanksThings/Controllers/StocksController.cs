@@ -21,7 +21,7 @@ namespace HanksThings.Controllers{
 		//[Route("details/{symbol}")]
 		public ActionResult Details(string symbol) {
 			StockRetriever.CacheFolder = Server.MapPath("~/Content/StockData");
-			ViewBag.History = StockRetriever.Retrieve("GLUU", new DateTime(2015, 1, 21), DateTime.Now);
+			ViewBag.History = StockRetriever.Retrieve(symbol, new DateTime(2015, 1, 21), DateTime.Now);
 			return View();
 		}
 

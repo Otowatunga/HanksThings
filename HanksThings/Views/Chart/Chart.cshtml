@@ -1,8 +1,7 @@
 ﻿@model HanksThings.Models.ChartData
 @{var guid = Guid.NewGuid(); }
 
-<div id="@guid" style="height: 100%; width: 100%;">Chart Area - @guid</div>
-<div id="output">output</div>
+<div id="@guid" style="height: 100%; width: 100%; border: 2px solid #999"></div>
 	<script>
 		dateTimeReviver = function (key, value) {
 			var a;
@@ -17,7 +16,6 @@
 		}
 
 			var jsonString = '@Html.Raw(Model.ToMorrisChartJson())';
-			$("#output").html(jsonString);
 			var chartData = JSON.parse(jsonString, dateTimeReviver);
 			Morris.Line({
 				element: '@guid',
@@ -25,8 +23,6 @@
 				xkey: 'date',
 				ykeys: ['value'],
 				labels: ['value'],
-				ymin: 0,
-				ymax: 1,
 				parseTime: false,
 				hideHover: "auto"
 		});

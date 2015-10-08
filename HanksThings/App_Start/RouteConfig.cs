@@ -11,12 +11,12 @@ namespace HanksThings {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			routes.MapMvcAttributeRoutes();
-			
+
 			// default
 			routes.MapRoute(
 				name: "Default",
-				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+				url: "{controller}/{action}/{symbol}",
+				defaults: new { controller = "Home", action = "Index", symbol = "GLUU" }//, symbol = UrlParameter.Optional }
 			);
 		}
 	}
