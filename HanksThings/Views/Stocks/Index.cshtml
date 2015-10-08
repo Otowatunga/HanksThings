@@ -1,0 +1,32 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+}
+
+@Styles.Render("~/Content/css/morris")
+
+<h2>Stocks</h2>
+
+<a id="gluuButton" href="#">GLUU Stochastic</a>
+<div id="gluuStoch" style="width: 600px; height: 400px;"></div>
+<div id="status"></div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/morris")
+	<script>
+		$(document).ready(function () {
+			$("#gluuButton").click(function () {
+				$.ajax({
+					url: "/Stocks/Chart/Stochastic/GLUU",
+					success: function (result, status) {
+						$("#gluuStoch").html(result);
+						$("#status").html(status);
+					},
+					error: function (xhr, status, error) {
+						$("#status").html(status + " : " + error);
+					}
+				});
+			});
+		});
+	</script>
+}

@@ -1,0 +1,52 @@
+﻿@using HanksThings.Models
+@{
+	ViewBag.Title = "Stocks";
+}
+
+@Styles.Render("~/Content/css/morris")
+
+
+<h2>Stocks</h2>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-2">
+			Recent List
+		</div>
+		<div class="col-sm-10">
+			Stock Charts
+			<div id="graph"></div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/morris")
+	<script>
+		dateTimeReviver = function (key, value) {
+			var a;
+			if (typeof value === 'string') {
+				a = /\/Date\((\d*)\)\//.exec(value);
+				if (a) {
+					var date = new Date(+a[1]);
+					return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+				}
+			}
+			return value;
+		}
+
+		$(document).ready(function () {
+			var day_data = JSON.parse('@Html.Raw(Html.ToJson(((IList<Tunga.Stocks.StockDay>)ViewBag.History).Reverse()))', dateTimeReviver);
+			Morris.Line({
+				element: 'graph',
+				data: day_data,
+				xkey: 'Date',
+				ykeys: ['AdjClose'],
+				labels: ['Price']
+			});
+		});
+
+	</script>
+}
+
+

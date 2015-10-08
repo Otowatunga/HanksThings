@@ -1,0 +1,38 @@
+﻿@model HanksThings.Models.ChartData
+@{var guid = Guid.NewGuid(); }
+
+<div id="@guid" style="height: 100%; width: 100%;">Chart Area - @guid</div>
+<div id="output">output</div>
+	<script>
+		dateTimeReviver = function (key, value) {
+			var a;
+			if (typeof value === 'string') {
+				a = /\/Date\((\d*)\)\//.exec(value);
+				if (a) {
+					var date = new Date(+a[1]);
+					return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+				}
+			}
+			return value;
+		}
+
+			var jsonString = '@Html.Raw(Model.ToMorrisChartJson())';
+			$("#output").html(jsonString);
+			var chartData = JSON.parse(jsonString, dateTimeReviver);
+			Morris.Line({
+				element: '@guid',
+				data: chartData,
+				xkey: 'date',
+				ykeys: ['value'],
+				labels: ['value'],
+				ymin: 0,
+				ymax: 1,
+				parseTime: false,
+				hideHover: "auto"
+		});
+
+
+	</script>
+
+
+
